@@ -1,4 +1,6 @@
-import java.util.Arrays;  
+import java.util.Arrays;
+import java.util.Random;
+
 public class population{
     snp[] possibleSnps;
     organism[] basePop; //starting population 
@@ -11,16 +13,15 @@ public class population{
             this.basePop[i] = new organism(m,this.possibleSnps);
             
         }
-
-        
-        
-
     } 
 
     private snp[] initSnps(int m){ //create array of random snps (length 2m)
+        Random rand = new Random();
         snp[] possibleSnps = new snp[2*m];
         for(i=0;i<2*m;i++){
-            possibleSnps[i] = new snp();
+            possibleSnps[i] = new snp(rand.nextInt(4), 
+            rand.nextInt(4), 
+            rand.nextInt(99)+1);
         }
         return possibleSnps;
     }
@@ -31,7 +32,6 @@ public class population{
     public void reproduce(int gens){ //simulate multiple generations of reproduction 
 
     }
-
 
     public organism[] getPop(){
         return this.basePop;
