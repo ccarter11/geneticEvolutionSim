@@ -1,38 +1,43 @@
-import using java.util.Random;
+import java.util.Random;
 public class organism{
+    String [] chrA; 
+    String [] chrB;
+    Random rand = new Random();
+    String nt;
+    int j;
+    int i;
     // create base pop orgainism
     public organism(int m, snp[] snps){ //chrom size, possible snps
-        String [] this.chrA = new [m]; // nt,origin
-        String [] this.chrB = new [m];
-        for(int i=0;i<m;i++){//add to chrA
-            String nt = snps[i].choose()
-            this.chrA[i] = nt + ','+ Integer.toString(i) //incase we need to reference the snp object later but the order has gotten messed up
+        this.chrA = new String[m]; // nt,origin
+        this.chrB = new String[m];
+        for(i=0;i<m;i++){//add to chrA
+            nt = snps[i].choose();
+            this.chrA[i] = nt + ','+ Integer.toString(i); //incase we need to reference the snp object later but the order has gotten messed up
         }
-        for(int i=m,i<2*m;i++){//add to chrB 
-            String nt = snps[i].choose();
+        for(i=m;i<2*m;i++){//add to chrB 
+            nt = snps[i].choose();
             this.chrB[i] = nt + ','+ Integer.toString(i);
         }
     }
     //create organism from parents 
-    public orgainism(organism parentA, orgainism parentB){ 
-        Random rand = new Random();
-        int m = partentA.getChrA().length;
-        String[] this.chrA = new [m];
-        String[] this.chrB = new [m];
-        for(int i=0;i<m;i++){//add to chr A 
-            int j = rand.nextInt(2);
+    public organism(organism parentA, organism parentB){ 
+        int m = parentA.getChrA().length;
+        this.chrA = new String[m];
+        this.chrB = new String[m];
+        for( i=0;i<m;i++){//add to chr A 
+            j = rand.nextInt(2);
             if(j==0){//choose from parent chr A 
-                 this.chrA[i] = parentA.getChrA();
+                 this.chrA[i] = parentA.getChrA()[i];
             }else{
-                this.chrA[i] = parentA.getChrB();
+                this.chrA[i] = parentA.getChrB()[i];
             }
         }
-        for(int i=0;i<m;i++){//add to chrB 
-            int j = rand.nextInt(2);
+        for(i=0;i<m;i++){//add to chrB 
+            j = rand.nextInt(2);
             if(j==0){//choose from parent chr A 
-                 this.chrB[i] = parentB.getChrA();
+                 this.chrB[i] = parentB.getChrA()[i];
             }else{
-                this.chrB[i] = parentB.getChrB();
+                this.chrB[i] = parentB.getChrB()[i];
             }
            
         }

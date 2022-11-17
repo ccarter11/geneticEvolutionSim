@@ -1,8 +1,11 @@
 public class population{
+    snp[] possibleSnps;
+    organism[] pop;
+    int i;
     //creates a random population and simulates evoltion perhaps with some analysis methods 
     public population(int n,int m){//num organism, chomosome size
-        snps[] this.possibleSnps = initSnps(m); // initialize random snps for this population
-        organism[] this.pop = new [n];
+        this.possibleSnps = initSnps(m); // initialize random snps for this population
+        this.pop = new organism[n];
         for(i=0;i<n;i++){ //create n random organisms
             organism x = new organism(m,this.possibleSnps);
         }
