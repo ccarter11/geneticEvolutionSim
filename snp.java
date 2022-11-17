@@ -6,15 +6,13 @@ public class snp{ //stores any nescessary info about each snp including possible
     Random rand = new Random();
     int prob;
     int i;
-    public snp(){
+    public snp(int prob, int index1, int index2){
         String[] nts = {"A","G","C","T"};
         this.variants = new String[2]; 
-        for(i=0;i<2;i++){//choose two out of AGTC 
-            int x = rand.nextInt(4);
-            this.variants[i] = nts[x];
-        }
-
-        this.prob =1+ rand.nextInt(9); // determine prob of first variant . 10-90 % 
+        int x = rand.nextInt(4);
+        this.variants[0] = nts[index1];
+        this.variants[0] = nts[index2];
+        this.prob = prob;
 
     }
 
@@ -30,14 +28,23 @@ public class snp{ //stores any nescessary info about each snp including possible
         return variant;
     }
 
-
-
     public int getProb(){
         return this.prob; 
     }
 
     public String[] getVariants(){
         return this.variants; 
+    }
+
+    class expressedSnp {
+        int expressedIndex;
+        public expressedSnp(int randomint) {
+            if (randomint>prob) {
+                expressedIndex=1;
+            } else {
+                expressedIndex=0;
+            }
+        }
     }
     
 }
