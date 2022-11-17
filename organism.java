@@ -16,7 +16,7 @@ public class organism{
         }
         for(i=m;i<2*m;i++){//add to chrB 
             nt = snps[i].choose();
-            this.chrB[i] = nt + ','+ Integer.toString(i);
+            this.chrB[i-m] = nt + ','+ Integer.toString(i);
         }
     }
     //create organism from parents 
