@@ -5,13 +5,18 @@ public class population{
     snp[] possibleSnps;
     organism[] basePop; //starting population 
     int i;
+    Random rand = new Random();
     //creates a random population and simulates evoltion perhaps with some analysis methods 
     public population(int n,int m){//num organism, chomosome size
         this.possibleSnps = initSnps(m); // initialize random snps for this population
         this.basePop = new organism[n];
+        snp.expressedSnp[] expressions = new snp.expressedSnp[n];
+        int choice = rand.nextInt(100);
+        for (i=0;i<n;i++){
+            expressions[i] = possibleSnps[i].new expressedSnp(choice);
+        }
         for(i=0;i<n;i++){ //create n random organisms
-            this.basePop[i] = new organism(m,this.possibleSnps);
-            
+            this.basePop[i] = new organism(m,expressions);
         }
     } 
 
