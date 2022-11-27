@@ -13,18 +13,6 @@ public class snp{ //stores any nescessary info about each snp including possible
         this.prob = prob;
     }
 
-    public String choose(){ //choose one of the variants based on associated probs 
-        int choice = rand.nextInt(100); 
-        String variant;
-
-        if(choice - this.prob <= 0){ //apply associated probability 
-            variant = this.variants[0];
-        }else{
-            variant=this.variants[1];
-        }
-        return variant;
-    }
-
     public int getProb(){
         return this.prob; 
     }
@@ -33,8 +21,9 @@ public class snp{ //stores any nescessary info about each snp including possible
         return this.variants; 
     }
 
-    class expressedSnp {
+    class expressedSnp{
         int expressedIndex;
+        String expressedVariant;
 
         public expressedSnp(int randomint) {
             if (randomint>prob) {
@@ -42,7 +31,11 @@ public class snp{ //stores any nescessary info about each snp including possible
             } else {
                 expressedIndex=0;
             }
+            this.expressedVariant = variants[expressedIndex];
         }
-        String expressedVariant = variants[expressedIndex];
+
+        public snp getSnp() {
+            return snp.this;
+        }
     }
 }
