@@ -1,6 +1,5 @@
 import java.util.Random;
 
-
 public class snp{ //stores any nescessary info about each snp including possible variants and associated probabilities
     String[] variants;
     Random rand = new Random();
@@ -8,12 +7,10 @@ public class snp{ //stores any nescessary info about each snp including possible
     int i;
     public snp(int prob, int index1, int index2){
         String[] nts = {"A","G","C","T"};
-        this.variants = new String[2]; 
-        int x = rand.nextInt(4);
+        this.variants = new String[2];
         this.variants[0] = nts[index1];
         this.variants[0] = nts[index2];
         this.prob = prob;
-
     }
 
     public String choose(){ //choose one of the variants based on associated probs 
@@ -38,6 +35,7 @@ public class snp{ //stores any nescessary info about each snp including possible
 
     class expressedSnp {
         int expressedIndex;
+
         public expressedSnp(int randomint) {
             if (randomint>prob) {
                 expressedIndex=1;
@@ -45,6 +43,6 @@ public class snp{ //stores any nescessary info about each snp including possible
                 expressedIndex=0;
             }
         }
+        String expressedVariant = variants[expressedIndex];
     }
-    
 }
