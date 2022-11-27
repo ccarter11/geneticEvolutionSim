@@ -40,6 +40,7 @@ public class population{
         }
         return nextGen
     }
+    
     public void reproduce(int gens){ //simulate multiple generations of reproduction 
 
     }
