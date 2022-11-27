@@ -11,33 +11,31 @@ public class organism{
         this.chrA = new String[m]; // nt,origin
         this.chrB = new String[m];
         for(i=0;i<m;i++){//add to chrA
-            nt = snps[i].expressedVariant;
-            this.chrA[i] = nt + ','+ Integer.toString(i); //incase we need to reference the snp object later but the order has gotten messed up
+            this.chrA[i] = snps[i].expressedVariant;
         }
         for(i=m;i<2*m;i++){//add to chrB 
-            nt = snps[i].expressedVariant;
-            this.chrB[i-m] = nt + ','+ Integer.toString(i);
+            this.chrB[i-m] = snps[i].expressedVariant;
         }
     }
     //create organism from parents 
-    public organism(organism parentA, organism parentB){ 
-        int m = parentA.getChrA().length;
+    public organism(organism daddy, organism mommy){ 
+        int m = daddy.getChrA().length;
         this.chrA = new String[m];
         this.chrB = new String[m];
         for( i=0;i<m;i++){//add to chr A 
             j = rand.nextInt(2);
             if(j==0){//choose from parent chr A 
-                 this.chrA[i] = parentA.getChrA()[i];
+                 this.chrA[i] = daddy.getChrA()[i];
             }else{
-                this.chrA[i] = parentA.getChrB()[i];
+                this.chrA[i] = daddy.getChrB()[i];
             }
         }
         for(i=0;i<m;i++){//add to chrB 
             j = rand.nextInt(2);
             if(j==0){//choose from parent chr A 
-                 this.chrB[i] = parentB.getChrA()[i];
+                 this.chrB[i] = mommy.getChrA()[i];
             }else{
-                this.chrB[i] = parentB.getChrB()[i];
+                this.chrB[i] = mommy.getChrB()[i];
             }
            
         }
