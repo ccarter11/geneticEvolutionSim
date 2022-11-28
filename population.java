@@ -22,9 +22,35 @@ public class population{
         }
     } 
 
-
     public population(organism[] foundingPop){
         this.generations.add(foundingPop);
+    }
+
+    public organism[] newGeneration(int k){ //create k new organisms to form 1 new generation
+        organism[] nextGen = new organism[k];
+        int A;
+        int B;
+        int genA;
+        int genB;
+        for(i=0;i<k;i++){
+            //choose two random parents
+            genA = rand.nextInt(generations.size());  
+            genB = rand.nextInt(generations.size()); 
+            A = rand.nextInt(generations.get(genA).length);
+            B = rand.nextInt(generations.get(genB).length);
+
+            if (genA == genB){ //make sure parents aren't the same organism
+                while(B==A)
+                    B = rand.nextInt(generations.get(genB).length);
+            }
+            A = rand.nextInt(k); 
+            B = rand.nextInt(k); 
+            while(B==A)
+                B = rand.nextInt(k);
+
+            nextGen[i] = new organism(randomFirstGeneration[A], randomFirstGeneration[B]);
+        }
+        return nextGen;
     }
 
 
@@ -36,25 +62,7 @@ public class population{
         for(i=0;i<2*m;i++)
             possibleSnps[i] = new snp(prob, index1, index2);
         return possibleSnps;
-    }
-
-    public organism[] newGeneration(int k){ //create k new organisms to form 1 new generation
-        organism[] nextGen = new organism[k];
-        int A;
-        int B;
-        for(i=0;i<k;i++){
-            //choose two random parents
-            A = rand.nextInt(k); 
-            B = rand.nextInt(k); 
-            while(B==A)
-                B = rand.nextInt(k);
-            
-            nextGen[i] = new organism(randomFirstGeneration[A], randomFirstGeneration[B]);
-        }
-        return nextGen;
-    }
-
-    
+    }  
     // public void reproduce(int gens){ //simulate multiple generations of reproduction 
 
     // }
