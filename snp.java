@@ -10,7 +10,7 @@ public class snp{ //stores any nescessary info about each snp including possible
         String[] nts = {"A","G","C","T"};
         this.variants = new String[2];
         this.variants[0] = nts[index1];
-        this.variants[0] = nts[index2];
+        this.variants[1] = nts[index2];
         this.prob = prob;
     }
 
