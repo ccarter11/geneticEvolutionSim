@@ -1,11 +1,13 @@
 import java.util.Arrays;  
 import java.util.Random;
+import java.util.ArrayList;
 
 public class population{
     snp[] possibleSnps;
     organism[] randomFirstGeneration;
     Random rand = new Random();
     int i;
+    ArrayList<organism[]> generations = new ArrayList<organism[]>();
     //creates a random population and simulates evoltion perhaps with some analysis methods 
     public population(int n,int m){//number of organisms n, chromosome size m
         this.possibleSnps = initSnps(2*m); // initialize random snps for this population
@@ -19,7 +21,11 @@ public class population{
         for(i=0;i<n;i++){ //create n random organisms
             this.randomFirstGeneration[i] = new organism(m, expressions);
         }
-    } 
+    }
+
+    public ArrayList<organism[]> getGenerations() {
+        return generations;
+    }
 
     private snp[] initSnps(int m){ //create array of random snps (length 2m)
         snp[] possibleSnps = new snp[2*m];
@@ -37,11 +43,10 @@ public class population{
         int B;
         for(i=0;i<k;i++){
             //choose two random parents
-            A = rand.nextInt(k); 
-            B = rand.nextInt(k); 
+            A = rand.nextInt(k);
+            B = rand.nextInt(k);
             while(B==A)
                 B = rand.nextInt(k);
-            
             nextGen[i] = new organism(randomFirstGeneration[A], randomFirstGeneration[B]);
         }
         return nextGen;
