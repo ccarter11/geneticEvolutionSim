@@ -24,9 +24,9 @@ public class organism{
         this.chrB = new String[m];
         for( i=0;i<m;i++){//add to chr A 
             j = rand.nextInt(2);
-            if(j==0){//choose from parent chr A 
+            if(j==0) {//choose from parent chr A 
                  this.chrA[i] = daddy.getChrA()[i];
-            }else{
+            } else {
                 this.chrA[i] = daddy.getChrB()[i];
             }
         }
@@ -37,7 +37,6 @@ public class organism{
             }else{
                 this.chrB[i] = mommy.getChrB()[i];
             }
-           
         }
     }
 

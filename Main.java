@@ -3,13 +3,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
+
     public static void writePopToFile(population pop, String filename) throws IOException {
         FileWriter fw = new FileWriter(filename);
         ArrayList<organism[]> generations = pop.getGenerations();
         for (int genIndex = 0; genIndex < generations.size(); genIndex++) {
             fw.write("Generation: " + Integer.toString(genIndex) +"\n");
             for (int orgIndex = 0; orgIndex < generations.get(genIndex).length; orgIndex++) {
-                
+
                 fw.write("Organism: " + Integer.toString(orgIndex) + "\nChromosome A\n");
 
                 String[] chromA = generations.get(genIndex)[orgIndex].getChrA();
@@ -26,5 +27,17 @@ public class Main {
             }
         }
         fw.close();
+    }
+
+    public static void comparePops() {
+
+    }
+
+    public static Boolean isBottleneck(population originalPop, population examinedPop) {
+        Boolean isBottleneck = false;
+
+        
+
+        return isBottleneck;
     }
 }
