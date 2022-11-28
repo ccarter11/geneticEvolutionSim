@@ -1,4 +1,3 @@
-import java.util.Arrays;  
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -21,8 +20,8 @@ public class population{
         for(i=0;i<n;i++){ //create n random organisms
             this.randomFirstGeneration[i] = new organism(m, expressions);
         }
-        this.generations.add(randomFirstGeneration);
     } 
+
 
     public population(organism[] foundingPop){
         this.generations.add(foundingPop);
@@ -43,24 +42,18 @@ public class population{
         organism[] nextGen = new organism[k];
         int A;
         int B;
-        int genA;
-        int genB;
         for(i=0;i<k;i++){
             //choose two random parents
-            genA = rand.nextInt(generations.size());  
-            genB = rand.nextInt(generations.size()); 
-            A = rand.nextInt(generations.get(genA).length);
-            B = rand.nextInt(generations.get(genB).length);
-
-            if (genA == genB){ //make sure parents aren't the same organism
-                while(B==A)
-                    B = rand.nextInt(generations.get(genB).length);
-            }
+            A = rand.nextInt(k); 
+            B = rand.nextInt(k); 
+            while(B==A)
+                B = rand.nextInt(k);
             
             nextGen[i] = new organism(randomFirstGeneration[A], randomFirstGeneration[B]);
         }
         return nextGen;
     }
+
     
     // public void reproduce(int gens){ //simulate multiple generations of reproduction 
 
