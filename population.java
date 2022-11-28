@@ -3,13 +3,13 @@ import java.util.Random;
 
 public class population{
     snp[] possibleSnps;
-    organism[] organismPop;
+    organism[] randomFirstGeneration;
     Random rand = new Random();
     int i;
     //creates a random population and simulates evoltion perhaps with some analysis methods 
     public population(int n,int m){//number of organisms n, chromosome size m
         this.possibleSnps = initSnps(2*m); // initialize random snps for this population
-        this.organismPop = new organism[n]; //main population for instance
+        this.randomFirstGeneration = new organism[n]; //main population for instance
         snp.expressedSnp[] expressions = new snp.expressedSnp[2*m]; //array for expressed snps
         int choice = rand.nextInt(100); //expression index
         for (i=0;i<2*m;i++){
@@ -17,7 +17,7 @@ public class population{
             expressions[i] = possibleSnps[i].new expressedSnp(choice);
         }
         for(i=0;i<n;i++){ //create n random organisms
-            this.organismPop[i] = new organism(m, expressions);
+            this.randomFirstGeneration[i] = new organism(m, expressions);
         }
     } 
 
@@ -42,7 +42,7 @@ public class population{
             while(B==A)
                 B = rand.nextInt(k);
             
-            nextGen[i] = new organism(organismPop[A], organismPop[B]);
+            nextGen[i] = new organism(randomFirstGeneration[A], randomFirstGeneration[B]);
         }
         return nextGen;
     }
@@ -52,7 +52,7 @@ public class population{
     }
 
     public organism[] getPop(){
-        return this.organismPop;
+        return this.randomFirstGeneration;
     }
 
     public static void main(String[] args){
@@ -60,6 +60,5 @@ public class population{
         population testPop = new population(10,3); 
         test = testPop.getPop();
         System.out.println(Arrays.toString(test));
-    
     }
 }
