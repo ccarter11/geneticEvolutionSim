@@ -1,15 +1,17 @@
 import java.util.Arrays;  
 import java.util.Random;
+import java.util.ArrayList;
 
 public class population{
     snp[] possibleSnps;
-    organism[] organismPop;
+    organism[] randomFirstGeneration;
     Random rand = new Random();
     int i;
+    ArrayList<organism[]> generations = new ArrayList<organism[]>() ;
     //creates a random population and simulates evoltion perhaps with some analysis methods 
     public population(int n,int m){//number of organisms n, chromosome size m
         this.possibleSnps = initSnps(2*m); // initialize random snps for this population
-        this.organismPop = new organism[n]; //main population for instance
+        this.randomFirstGeneration = new organism[n]; //main population for instance
         snp.expressedSnp[] expressions = new snp.expressedSnp[2*m]; //array for expressed snps
         int choice = rand.nextInt(100); //expression index
         for (i=0;i<2*m;i++){
@@ -17,9 +19,11 @@ public class population{
             expressions[i] = possibleSnps[i].new expressedSnp(choice);
         }
         for(i=0;i<n;i++){ //create n random organisms
-            this.organismPop[i] = new organism(m, expressions);
+            this.randomFirstGeneration[i] = new organism(m, expressions);
         }
+        this.generations.add(randomFirstGeneration);
     } 
+
 
     private snp[] initSnps(int m){ //create array of random snps (length 2m)
         snp[] possibleSnps = new snp[2*m];
@@ -35,14 +39,21 @@ public class population{
         organism[] nextGen = new organism[k];
         int A;
         int B;
+        int genA;
+        int genB;
         for(i=0;i<k;i++){
             //choose two random parents
-            A = rand.nextInt(k); 
-            B = rand.nextInt(k); 
-            while(B==A)
-                B = rand.nextInt(k);
+            genA = rand.nextInt(generations.size());  
+            genB = rand.nextInt(generations.size()); 
+            A = rand.nextInt(generations.get(genA).length);
+            B = rand.nextInt(generations.get(genB).length);
+
+            if (genA == genB){ //make sure parents aren't the same organism
+                while(B==A)
+                    B = rand.nextInt(generations.get(genB).length);
+            }
             
-            nextGen[i] = new organism(organismPop[A], organismPop[B]);
+            nextGen[i] = new organism(randomFirstGeneration[A], randomFirstGeneration[B]);
         }
         return nextGen;
     }
@@ -51,15 +62,15 @@ public class population{
 
     }
 
-    public organism[] getPop(){
-        return this.organismPop;
-    }
+    // public organism[] getPop(){
+    //     return this.organismPop;
+    // }
 
     public static void main(String[] args){
-        organism[] test;
-        population testPop = new population(10,3); 
-        test = testPop.getPop();
-        System.out.println(Arrays.toString(test));
+        organism[] generation1;
+        population testPop = new population(10,5); 
+        generation1 = testPop.newGeneration(5);
+        System.out.println(Arrays.toString(generation1));
     
     }
 }
