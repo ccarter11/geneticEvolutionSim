@@ -53,24 +53,25 @@ public class population{
         organism[] nextGen = new organism[k];
         int A;
         int B;
-        int genIdx;
         for(i=0;i<k;i++){
             //choose two random parents
 
-            genIdx = this.generations.size() - 1;
-            A = rand.nextInt(generations.get(genIdx).length);
-            B = rand.nextInt(generations.get(genIdx).length);
+            A = rand.nextInt(generations.get(0).length);
+            B = rand.nextInt(generations.get(0).length);
   
             while(B==A)//make sure parents aren't the same organism
-                B = rand.nextInt(generations.get(genIdx).length);
-            nextGen[i] = new organism(generations.get(genIdx)[A], generations.get(genIdx)[B]);
+                B = rand.nextInt(generations.get(0).length);
+            nextGen[i] = new organism(generations.get(0)[A], generations.get(0)[B]);
         }
+        System.out.println("new generation created");
         return nextGen;
     }
     
     public void reproduce(int gens, int genSize){ //simulate multiple generations of reproduction 
-        for(i=0;i<gens;i++) 
-            this.generations.add(newGeneration(genSize));
+        for(int i = 0; i < gens; i++) {
+            organism[] nextGen = newGeneration(genSize);
+            generations.add(0, nextGen);
+        }
     }
 
     public ArrayList<organism[]> getGenerations() {
