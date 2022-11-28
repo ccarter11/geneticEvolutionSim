@@ -27,7 +27,4 @@ public class Main {
         }
         fw.close();
     }
-    public static void main(String[] args) {
-        population pop = new population(200, 100);
-    }
 }
