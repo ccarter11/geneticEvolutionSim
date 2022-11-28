@@ -44,6 +44,15 @@ public class Main {
         return isBottleneck;
     }
 
+
+    // public static population bottleNeck(popA,popB,remainingOrganisms){
+        
+    // }
+
+    // public static population founderEffect(popA, remainingOrganisms){
+
+    // }
+
     public static snp[] initSnps(int m) {
         snp[] possibleSnps = new snp[m];
         int index1 = rand.nextInt(4);

@@ -46,11 +46,12 @@ public class population{
             }
             this.randomFirstGeneration[i] = new organism(m, expressions);
         }
+        this.generations.add(randomFirstGeneration);
     } 
-
     public population(organism[] foundingPop){
-        this.generations.add(foundingPop);
+        this.generations.add(0,foundingPop);
     }
+
 
     public organism[] newGeneration(int k){ //create k new organisms to form previous generation
         organism[] nextGen = new organism[k];
@@ -74,6 +75,43 @@ public class population{
     public void reproduce(int gens, int genSize){ //simulate multiple generations of reproduction 
         for(i=0;i<gens;i++) 
             this.generations.add(newGeneration(genSize));
+    }
+
+    //reduce the current population to r organisms
+    public void bottleNeck(int r){ //r --> remaining organisms after event
+        // pick r organisms from recent gen at random to survive
+        int idx;
+        int surviving = 0;
+        organism[] survivingPop = new organism [r];
+        HashMap<Integer, Boolean> survivingOrganisms = new HashMap<Integer, Boolean>();
+        while(surviving<r){
+            idx = rand.nextInt(generations.get(0).length); 
+            if (survivingOrganisms.get(idx) == null){
+                survivingPop[i] = generations.get(0)[idx];
+                survivingOrganisms.put(idx, true);
+                surviving++;
+            }
+        }
+
+        generations.add(0,survivingPop);
+    }
+    //return a subset of current generation that will start a new population
+    public organism[] founderEffect(int r){
+        int idx;
+        int founders = 0;
+        organism[] foundingPop = new organism [r];
+        HashMap<Integer, Boolean> foundingOrganisms = new HashMap<Integer, Boolean>();
+        while(founders<r){
+            idx = rand.nextInt(generations.get(0).length); 
+            if (foundingOrganisms.get(idx) == null){
+                foundingPop[founders] = generations.get(0)[idx];
+                foundingOrganisms.put(idx, true);
+                founders++;
+            }
+        }
+
+        return foundingPop; 
+
     }
 
     public ArrayList<organism[]> getGenerations() {
