@@ -14,7 +14,7 @@ public class Main {
             fw.write("Generation: " + Integer.toString(genIndex) +"\n");
             for (int orgIndex = 0; orgIndex < generations.get(genIndex).length; orgIndex++) {
 
-                fw.write("Organism: " + Integer.toString(orgIndex) + "\nChromosome A\n");
+                fw.write("\nOrganism: " + Integer.toString(orgIndex) + "\nChromosome A\n");
 
                 String[] chromA = generations.get(genIndex)[orgIndex].getChrA();
                 for (int snpIndex = 0; snpIndex < chromA.length; snpIndex++) {
@@ -46,11 +46,10 @@ public class Main {
 
     public static snp[] initSnps(int m) {
         snp[] possibleSnps = new snp[m];
-        int index1 = rand.nextInt(4);
-        int index2 = rand.nextInt(4);
-        int prob = rand.nextInt(101);
         for(int i = 0; i < m; i++) {
-            possibleSnps[i] = new snp(prob, index1, index2);
+            possibleSnps[i] = new snp(rand.nextInt(101), 
+            rand.nextInt(4),
+            rand.nextInt(4));
             possibleSnps[i].setPosition(i);
         }
         return possibleSnps;

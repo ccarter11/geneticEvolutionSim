@@ -46,10 +46,7 @@ public class population{
             }
             this.randomFirstGeneration[i] = new organism(m, expressions);
         }
-    } 
-
-    public population(organism[] foundingPop){
-        this.generations.add(foundingPop);
+        generations.add(0, randomFirstGeneration);
     }
 
     public organism[] newGeneration(int k){ //create k new organisms to form previous generation
