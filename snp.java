@@ -6,7 +6,7 @@ public class snp{ //stores any nescessary info about each snp including possible
     int prob;
     int i;
     int position;
-    public snp(int prob, int index1, int index2){
+    public snp(int prob, int index1, int index2) {
         String[] nts = {"A","G","C","T"};
         this.variants = new String[2];
         this.variants[0] = nts[index1];
