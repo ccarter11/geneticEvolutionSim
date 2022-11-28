@@ -1,23 +1,42 @@
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class population{
     snp[] possibleSnps;
     organism[] randomFirstGeneration;
     Random rand = new Random();
     int i;
-    ArrayList<organism[]> generations = new ArrayList<organism[]>() ;
+    ArrayList<organism[]> generations = new ArrayList<organism[]>();
     //creates a random population and simulates evoltion perhaps with some analysis methods 
-    public population(int n,int m){//number of organisms n, chromosome size m
-        possibleSnps = initSnps(2*m); // initialize random snps for this population
+    public population(int n, int m, snp[] possibleSnps){//number of organisms n, chromosome size m
+        this.possibleSnps = possibleSnps;
         this.randomFirstGeneration = new organism[n]; //main population for instance
-        snp.expressedSnp[] expressions = new snp.expressedSnp[2*m]; //array for expressed snps
-        int choice = rand.nextInt(100); //expression index
-        for (i=0;i<2*m;i++){
-            //assign the possible snps to expressedSnps using the choice variable
-            expressions[i] = possibleSnps[i].new expressedSnp(choice);
-        }
+
         for(i=0;i<n;i++){ //create n random organisms
+
+            HashMap<Integer, snp.expressedSnp> usedSnps = 
+            new HashMap<Integer, snp.expressedSnp>();
+
+            int position = rand.nextInt(possibleSnps.length);
+
+            int snpAmount = 0;
+
+            snp.expressedSnp[] expressions = new snp.expressedSnp[2 * m];
+            int expressionsCurrentIndex = 0;
+
+            while (snpAmount < 2 * m) {
+                if (usedSnps.get(position) == null) {
+                    snp.expressedSnp positionSnp = 
+                    possibleSnps[position].new expressedSnp(rand.nextInt(101));
+                    usedSnps.put(position, positionSnp);
+
+                    expressions[expressionsCurrentIndex] = positionSnp;
+                    expressionsCurrentIndex+=1;
+
+                    snpAmount+=1;
+                }
+            }
             this.randomFirstGeneration[i] = new organism(m, expressions);
         }
     } 
@@ -52,17 +71,7 @@ public class population{
         }
         return nextGen;
     }
-
-
-    private snp[] initSnps(int m){ //create array of random snps (length 2m)
-        snp[] possibleSnps = new snp[2*m];
-        int index1 = rand.nextInt(4);
-        int index2 = rand.nextInt(4);
-        int prob = rand.nextInt(101);
-        for(i=0;i<2*m;i++)
-            possibleSnps[i] = new snp(prob, index1, index2);
-        return possibleSnps;
-    }  
+    
     // public void reproduce(int gens){ //simulate multiple generations of reproduction 
 
     // }

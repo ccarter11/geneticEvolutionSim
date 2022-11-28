@@ -5,6 +5,7 @@ public class snp{ //stores any nescessary info about each snp including possible
     Random rand = new Random();
     int prob;
     int i;
+    int position;
     public snp(int prob, int index1, int index2){
         String[] nts = {"A","G","C","T"};
         this.variants = new String[2];
@@ -15,6 +16,14 @@ public class snp{ //stores any nescessary info about each snp including possible
 
     public int getProb(){
         return this.prob; 
+    }
+
+    public int getPosition() {
+        return this.position;
+    }
+
+    public void setPosition(int newPosition) {
+        this.position = newPosition;
     }
 
     public String[] getVariants(){
