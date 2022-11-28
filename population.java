@@ -23,12 +23,11 @@ public class population{
 
     private snp[] initSnps(int m){ //create array of random snps (length 2m)
         snp[] possibleSnps = new snp[2*m];
-
-        /*
+        int index1 = rand.nextInt(4);
+        int index2 = rand.nextInt(4);
+        int prob = rand.nextInt(101);
         for(i=0;i<2*m;i++)
-            possibleSnps[i] = new snp();
-        */
-
+            possibleSnps[i] = new snp(prob, index1, index2);
         return possibleSnps;
     }
 
