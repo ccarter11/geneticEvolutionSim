@@ -56,10 +56,20 @@ public class Main {
         return possibleSnps;
     }
 
-    public static void main(String[] args) {
-        snp[] possibleSnps1 = initSnps(10);
+    public static void main(String[] args) throws IOException {
+        snp[] possibleSnps1 = initSnps(400);
+        System.out.println("possibleSnps1 initialized");
         population populationA = new population(10, 100, possibleSnps1);
+        System.out.println("populationA initialized");
         population populationB = new population(10, 100, possibleSnps1);
+        System.out.println("populationB initialized");
+
+        for (int i = 0; i < populationA.randomFirstGeneration.length; i++) {
+            System.out.println(populationA.randomFirstGeneration[i].chrA[0]);
+        }
+
+        writePopToFile(populationB, "popB.txt");
+        writePopToFile(populationA, "popA.txt");
     }
 }
 

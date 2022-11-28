@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class population{
     snp[] possibleSnps;
-    organism[] randomFirstGeneration;
+    public organism[] randomFirstGeneration;
     Random rand = new Random();
     int i;
     ArrayList<organism[]> generations = new ArrayList<organism[]>();
@@ -12,13 +12,16 @@ public class population{
     public population(int n, int m, snp[] possibleSnps){//number of organisms n, chromosome size m
         this.possibleSnps = possibleSnps;
         this.randomFirstGeneration = new organism[n]; //main population for instance
+        System.out.println("possibleSnps and randomFirstGeneration initialized");
 
         for(i=0;i<n;i++){ //create n random organisms
+            System.out.println("creating organism #" + i);
 
             HashMap<Integer, snp.expressedSnp> usedSnps = 
             new HashMap<Integer, snp.expressedSnp>();
 
             int position = rand.nextInt(possibleSnps.length);
+            //position of currently examined snp
 
             int snpAmount = 0;
 
@@ -26,6 +29,8 @@ public class population{
             int expressionsCurrentIndex = 0;
 
             while (snpAmount < 2 * m) {
+                position = rand.nextInt(possibleSnps.length);
+                System.out.println("finding a new snp to add");
                 if (usedSnps.get(position) == null) {
                     snp.expressedSnp positionSnp = 
                     possibleSnps[position].new expressedSnp(rand.nextInt(101));
@@ -33,6 +38,8 @@ public class population{
 
                     expressions[expressionsCurrentIndex] = positionSnp;
                     expressionsCurrentIndex+=1;
+
+                    System.out.println("snp added");
 
                     snpAmount+=1;
                 }
@@ -52,6 +59,7 @@ public class population{
         int genIdx;
         for(i=0;i<k;i++){
             //choose two random parents
+
             genIdx = this.generations.size() - 1;
             A = rand.nextInt(generations.get(genIdx).length);
             B = rand.nextInt(generations.get(genIdx).length);

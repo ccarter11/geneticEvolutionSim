@@ -3,12 +3,11 @@ public class organism{
     String [] chrA; 
     String [] chrB;
     Random rand = new Random();
-    String nt;
     int j;
     int i;
     // create base pop orgainism
     public organism(int m, snp.expressedSnp[] snps){ //chrom size, possible snps
-        this.chrA = new String[m]; // nt,origin
+        this.chrA = new String[m];
         this.chrB = new String[m];
         for(i=0;i<m;i++){//add to chrA
             this.chrA[i] = snps[i].expressedVariant;
