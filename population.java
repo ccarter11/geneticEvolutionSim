@@ -45,36 +45,28 @@ public class population{
         this.generations.add(foundingPop);
     }
 
-    public organism[] newGeneration(int k){ //create k new organisms to form 1 new generation
+    public organism[] newGeneration(int k){ //create k new organisms to form previous generation
         organism[] nextGen = new organism[k];
         int A;
         int B;
-        int genA;
-        int genB;
+        int genIdx;
         for(i=0;i<k;i++){
             //choose two random parents
-            genA = rand.nextInt(generations.size());  
-            genB = rand.nextInt(generations.size()); 
-            A = rand.nextInt(generations.get(genA).length);
-            B = rand.nextInt(generations.get(genB).length);
-
-            if (genA == genB){ //make sure parents aren't the same organism
-                while(B==A)
-                    B = rand.nextInt(generations.get(genB).length);
-            }
-            A = rand.nextInt(k); 
-            B = rand.nextInt(k); 
-            while(B==A)
-                B = rand.nextInt(k);
-
-            nextGen[i] = new organism(randomFirstGeneration[A], randomFirstGeneration[B]);
+            genIdx = this.generations.size() - 1;
+            A = rand.nextInt(generations.get(genIdx).length);
+            B = rand.nextInt(generations.get(genIdx).length);
+  
+            while(B==A)//make sure parents aren't the same organism
+                B = rand.nextInt(generations.get(genIdx).length);
+            nextGen[i] = new organism(generations.get(genIdx)[A], generations.get(genIdx)[B]);
         }
         return nextGen;
     }
     
-    // public void reproduce(int gens){ //simulate multiple generations of reproduction 
-
-    // }
+    public void reproduce(int gens, int genSize){ //simulate multiple generations of reproduction 
+        for(i=0;i<gens;i++) 
+            this.generations.add(newGeneration(genSize));
+    }
 
     public ArrayList<organism[]> getGenerations() {
         return generations;
