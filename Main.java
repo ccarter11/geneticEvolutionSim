@@ -10,11 +10,11 @@ public class Main {
     public static void writePopToFile(population pop, String filename) throws IOException {
         FileWriter fw = new FileWriter(filename);
         ArrayList<organism[]> generations = pop.getGenerations();
-        for (int genIndex = 0; genIndex < generations.size(); genIndex++) {
-            fw.write("Generation: " + Integer.toString(genIndex) +"\n");
+        for (int genIndex = generations.size()-1; genIndex >= 0; genIndex--) {
+            fw.write("Generation: " + Integer.toString(generations.size()-genIndex) +"\n");
             for (int orgIndex = 0; orgIndex < generations.get(genIndex).length; orgIndex++) {
 
-                fw.write("Organism: " + Integer.toString(orgIndex) + "\nChromosome A\n");
+                fw.write("\nOrganism: " + Integer.toString(orgIndex) + "\nChromosome A\n");
 
                 String[] chromA = generations.get(genIndex)[orgIndex].getChrA();
                 for (int snpIndex = 0; snpIndex < chromA.length; snpIndex++) {
@@ -28,6 +28,7 @@ public class Main {
                     fw.write(chromB[snpIndex] + ", ");
                 }
             }
+            fw.write("\n\n");
         }
         fw.close();
     }
@@ -55,11 +56,10 @@ public class Main {
 
     public static snp[] initSnps(int m) {
         snp[] possibleSnps = new snp[m];
-        int index1 = rand.nextInt(4);
-        int index2 = rand.nextInt(4);
-        int prob = rand.nextInt(101);
         for(int i = 0; i < m; i++) {
-            possibleSnps[i] = new snp(prob, index1, index2);
+            possibleSnps[i] = new snp(rand.nextInt(101), 
+            rand.nextInt(4),
+            rand.nextInt(4));
             possibleSnps[i].setPosition(i);
         }
         return possibleSnps;
@@ -77,8 +77,16 @@ public class Main {
             System.out.println(populationA.randomFirstGeneration[i].chrA[0]);
         }
 
+        populationB.reproduce(8, 10);
+        populationA.reproduce(8, 10);
+
         writePopToFile(populationB, "popB.txt");
         writePopToFile(populationA, "popA.txt");
+
+        System.out.println("generations");
+        for (int i = 0; i < populationA.generations.size(); i++) {
+            System.out.println(populationA.generations.get(i)[0].getChrA()[0]);
+        }
     }
 }
 
