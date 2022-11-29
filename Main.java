@@ -8,7 +8,9 @@ public class Main {
 
     public static Random rand = new Random();
     public static int genSize = 10;
-    public static int chromSize = 100;
+
+    public static int chromSize = 100; 
+
 
     public static void writePopToFile(population pop, String filename) throws IOException {
         FileWriter fw = new FileWriter(filename);
@@ -71,26 +73,59 @@ public class Main {
     public static void analyzeDiversity(population popA, population popB){ 
         //compare snps from PopA and PopB
         HashMap<Integer, Boolean> popSnps = new HashMap<Integer, Boolean>(); //False means in popA but not B, True means in both 
-        int inAnotB = 0;
+
         int inBnotA = 0; 
+        int inAnotB = 0 ;
         organism[] organismsA = popA.generations.get(0);
         int chrmSize = organismsA[0].chrA.length;
+        
         for(int i=0;i<organismsA.length;i++){
             organism currOrg =  organismsA[i] ;
             for(int j=0; j<2*chrmSize;j++){// for each nt
                 if(j<chrmSize){ //access chrmA
                    int snpId = currOrg.chrA[j].getSnp().position;
-                   popSnps.put(snpId,false); //record presence of snp    
+                    if (popSnps.get(snpId) != null){
+                        popSnps.put(snpId,true); //record presence of snp    
+                        inAnotB--;}
+                    else{
+                        inBnotA++; 
+                    }
                 }else{ 
                     int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
-                    popSnps.put(snpId,false); 
+
+                    if (popSnps.get(snpId) != null){
+                         popSnps.put(snpId,true); 
+                        inAnotB--; 
+                    }else{
+                        inBnotA++;
+                    }
+
+                }
+            }
+        }
+        organism[] organismsB = popB.generations.get(0);
+        for(int i=0; i<organismsB.length;i++){
+            organism currOrg =  organismsB[i] ;
+            for(int j=0; j<2*chrmSize;j++){// for each nt
+                if(j<chrmSize){ //access chrmA
+                   int snpId = currOrg.chrB[j].getSnp().position;
+                    if (popSnps.get(snpId) != null){
+                        popSnps.put(snpId,false); //record presence of snp    
+                        inAnotB++;}
+                }else{ 
+                    int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
+                    if (popSnps.get(snpId) != null){
+                         popSnps.put(snpId,false); 
+                        inAnotB++; 
+                    }
                 }
             }
         }
 
 
+        
         //when set to true,subtract from in popAnotB
-    }
+    } 
 
     public static void parseArgs(String[] args) {
         for (int i = 0; i < args.length; i++) {
