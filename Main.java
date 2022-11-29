@@ -70,10 +70,10 @@ public class Main {
         return possibleSnps;
     }
 
-    public static void analyzeDiversity(population popA, population popB){ 
+    public static void analyzeDiversity(population popA,population popB){ 
         //compare snps from PopA and PopB
         HashMap<Integer, Boolean> popSnps = new HashMap<Integer, Boolean>(); //False means in popA but not B, True means in both 
-
+        
         int inBnotA = 0; 
         int inAnotB = 0 ;
         organism[] organismsA = popA.generations.get(0);
@@ -83,24 +83,18 @@ public class Main {
             organism currOrg =  organismsA[i] ;
             for(int j=0; j<2*chrmSize;j++){// for each nt
                 if(j<chrmSize){ //access chrmA
-                   int snpId = currOrg.chrA[j].getSnp().position;
-                    if (popSnps.get(snpId) != null){
-                        popSnps.put(snpId,true); //record presence of snp    
-                        inAnotB--;}
-                    else{
-                        inBnotA++; 
-                    }
-                }else{ 
-                    int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
-
-                    if (popSnps.get(snpId) != null){
-                         popSnps.put(snpId,true); 
-                        inAnotB--; 
-                    }else{
-                        inBnotA++;
-                    }
-
-                }
+                    int snpId = currOrg.chrA[j].getSnp().position;
+                     if (popSnps.get(snpId) != null){
+                         popSnps.put(snpId,false); //record presence of snp    
+                         inAnotB++;}
+                 }else{ 
+                     int snpId = currOrg.chrA[j-chrmSize].getSnp().position;
+                     if (popSnps.get(snpId) != null){
+                          popSnps.put(snpId,false); 
+                         inAnotB++; 
+                     }
+                 }
+                
             }
         }
         organism[] organismsB = popB.generations.get(0);
@@ -108,18 +102,23 @@ public class Main {
             organism currOrg =  organismsB[i] ;
             for(int j=0; j<2*chrmSize;j++){// for each nt
                 if(j<chrmSize){ //access chrmA
-                   int snpId = currOrg.chrB[j].getSnp().position;
-                    if (popSnps.get(snpId) != null){
-                        popSnps.put(snpId,false); //record presence of snp    
-                        inAnotB++;}
-                }else{ 
-                    int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
-                    if (popSnps.get(snpId) != null){
-                         popSnps.put(snpId,false); 
-                        inAnotB++; 
-                    }
-
-                }
+                    int snpId = currOrg.chrB[j].getSnp().position;
+                     if (popSnps.get(snpId) != null){
+                         popSnps.put(snpId,true); //record presence of snp    
+                         inAnotB--;}
+                     else{
+                         inBnotA++; 
+                     }
+                 }else{ 
+                     int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
+                     if (popSnps.get(snpId) != null){
+                          popSnps.put(snpId,true); 
+                         inAnotB--; 
+                     }else{
+                         inBnotA++;
+                     }
+ 
+                 }
             }
         }
 
@@ -127,19 +126,6 @@ public class Main {
         
         //when set to true,subtract from in popAnotB
     }   
-
-    public static void parseArgs(String[] args) {
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("-n")) {
-                //generation size, default=10
-                genSize = Integer.parseInt(args[i+1]);
-            } 
-            else if (args[i].equals("-m")) {
-                //chromosome size, default=100
-                chromSize = Integer.parseInt(args[i+1]);
-            }
-        }
-    }
 
     public static void parseArgs(String[] args) {
         for (int i = 0; i < args.length; i++) {
