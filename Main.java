@@ -88,7 +88,7 @@ public class Main {
             }
         }
 
-        
+
         //when set to true,subtract from in popAnotB
     }
 
@@ -124,8 +124,6 @@ public class Main {
         // //bottleneck effect on population A
         // populationA.bottleNeck(4);
         // populationA.reproduce(2, 10);
-        
-
 
         // writePopToFile(populationB, "popB.txt");
         // writePopToFile(populationA, "popA.txt");
@@ -145,7 +143,5 @@ public class Main {
 
         writePopToFile(populationC, "popC.txt");
         writePopToFile(populationD, "popD.txt");
-
     }
-
 }
