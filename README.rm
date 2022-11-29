@@ -1,0 +1,18 @@
+geneticEvolutionSim
+
+This is a simulator of evolution in generic populations (no species specified). The genetic
+material is entirely represented by SNPs, with nucleotide expression options and positions in
+the genome used for ID.
+
+The main method of this project simulates the founder effect for population C and
+population D and the bottleneck for population A and B. There are methods used to simulate
+the effects and methods used to analyze the results. The genetic makeup of the simulation
+is printed into text files, while the final analysis is printed into the terminal.
+
+There are just 2 arguments that can be used,
+
+-m [integer: chromosome length]
+
+-n [integer: generation size]
+
+these each effect the individuals and the populations simulated in the project.
