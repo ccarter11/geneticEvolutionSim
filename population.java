@@ -89,7 +89,7 @@ public class population{
         while(surviving<r){
             idx = rand.nextInt(generations.get(0).length); 
             if (survivingOrganisms.get(idx) == null){
-                survivingPop[i] = generations.get(0)[idx];
+                survivingPop[surviving] = generations.get(0)[idx];
                 survivingOrganisms.put(idx, true);
                 surviving++;
             }

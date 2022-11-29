@@ -76,9 +76,15 @@ public class Main {
         for (int i = 0; i < populationA.randomFirstGeneration.length; i++) {
             System.out.println(populationA.randomFirstGeneration[i].chrA[0]);
         }
-
-        populationB.reproduce(8, 10);
+        
+        //initial evolution
+        populationB.reproduce(11, 10);
         populationA.reproduce(8, 10);
+        //bottleneck effect on population A
+        populationA.bottleNeck(4);
+        populationA.reproduce(2, 10);
+        
+
 
         writePopToFile(populationB, "popB.txt");
         writePopToFile(populationA, "popA.txt");
