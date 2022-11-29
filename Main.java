@@ -7,6 +7,8 @@ import java.util.HashMap;
 public class Main {
 
     public static Random rand = new Random();
+    public static int genSize = 10;
+    public static int chromSize = 100; 
 
     public static void writePopToFile(population pop, String filename) throws IOException {
         FileWriter fw = new FileWriter(filename);
@@ -120,6 +122,19 @@ public class Main {
 
         
         //when set to true,subtract from in popAnotB
+    }   
+
+    public static void parseArgs(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("-n")) {
+                //generation size, default=10
+                genSize = Integer.parseInt(args[i+1]);
+            } 
+            else if (args[i].equals("-m")) {
+                //chromosome size, default=100
+                chromSize = Integer.parseInt(args[i+1]);
+            }
+        }
     }
 
     public static void main(String[] args) throws IOException {
