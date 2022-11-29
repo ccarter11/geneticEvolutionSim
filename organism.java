@@ -24,7 +24,7 @@ public class organism{
         for( i=0;i<m;i++){//add to chr A 
             j = rand.nextInt(2);
             if(j==0) {//choose from parent chr A 
-                 this.chrA[i] = daddy.getChrA()[i];
+                this.chrA[i] = daddy.getChrA()[i];
             } else {
                 this.chrA[i] = daddy.getChrB()[i];
             }
