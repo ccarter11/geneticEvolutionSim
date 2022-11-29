@@ -5,7 +5,7 @@ public class snp{ //stores any nescessary info about each snp including possible
     Random rand = new Random();
     int prob;
     int i;
-    int position;
+    public int position;
     public snp(int prob, int index1, int index2) {
         String[] nts = {"A","G","C","T"};
         this.variants = new String[2];
@@ -33,6 +33,7 @@ public class snp{ //stores any nescessary info about each snp including possible
     class expressedSnp{
         int expressedIndex;
         String expressedVariant;
+        int position;
 
         public expressedSnp(int randomint) {
             if (randomint>prob) {

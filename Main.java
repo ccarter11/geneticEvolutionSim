@@ -6,6 +6,8 @@ import java.util.Random;
 public class Main {
 
     public static Random rand = new Random();
+    public static int genSize = 10;
+    public static int chromSize = 100;
 
     public static void writePopToFile(population pop, String filename) throws IOException {
         FileWriter fw = new FileWriter(filename);
@@ -16,16 +18,16 @@ public class Main {
 
                 fw.write("\nOrganism: " + Integer.toString(orgIndex) + "\nChromosome A\n");
 
-                String[] chromA = generations.get(genIndex)[orgIndex].getChrA();
+                snp.expressedSnp[] chromA = generations.get(genIndex)[orgIndex].getChrA();
                 for (int snpIndex = 0; snpIndex < chromA.length; snpIndex++) {
-                    fw.write(chromA[snpIndex] + ", ");
+                    fw.write(chromA[snpIndex].expressedVariant + ", ");
                 }
 
                 fw.write("\nChromosome B\n");
 
-                String[] chromB = generations.get(genIndex)[orgIndex].getChrB();
+                snp.expressedSnp[] chromB = generations.get(genIndex)[orgIndex].getChrB();
                 for (int snpIndex = 0; snpIndex < chromB.length; snpIndex++) {
-                    fw.write(chromB[snpIndex] + ", ");
+                    fw.write(chromB[snpIndex].expressedVariant + ", ");
                 }
             }
             fw.write("\n\n");
@@ -44,7 +46,6 @@ public class Main {
 
         return isBottleneck;
     }
-
 
     // public static population bottleNeck(popA,popB,remainingOrganisms){
         
@@ -65,7 +66,22 @@ public class Main {
         return possibleSnps;
     }
 
+    public static void parseArgs(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("-n")) {
+                //generation size, default=10
+                genSize = Integer.parseInt(args[i+1]);
+            } 
+            else if (args[i].equals("-m")) {
+                //chromosome size, default=100
+                chromSize = Integer.parseInt(args[i+1]);
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException {
+
+
         snp[] possibleSnps1 = initSnps(400);
         System.out.println("possibleSnps1 initialized");
         population populationA = new population(10, 100, possibleSnps1);
@@ -83,8 +99,6 @@ public class Main {
         //bottleneck effect on population A
         populationA.bottleNeck(4);
         populationA.reproduce(2, 10);
-        
-
 
         writePopToFile(populationB, "popB.txt");
         writePopToFile(populationA, "popA.txt");
