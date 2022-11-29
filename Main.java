@@ -8,7 +8,6 @@ public class Main {
 
     public static Random rand = new Random();
     public static int genSize = 10;
-
     public static int chromSize = 100; 
 
 
@@ -102,19 +101,6 @@ public class Main {
             organism currOrg =  organismsB[i] ;
             for(int j=0; j<2*chrmSize;j++){// for each nt
                 if(j<chrmSize){ //access chrmA
-<<<<<<< HEAD
-                   int snpId = currOrg.chrB[j].getSnp().position;
-                    if (popSnps.get(snpId) != null){
-                        popSnps.put(snpId,false); //record presence of snp    
-                        inAnotB++;}
-                }else{ 
-                    int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
-                    if (popSnps.get(snpId) != null){
-                         popSnps.put(snpId,false); 
-                        inAnotB++; 
-                    }
-                }
-=======
                     int snpId = currOrg.chrB[j].getSnp().position;
                      if (popSnps.get(snpId) != null){
                          popSnps.put(snpId,true); //record presence of snp    
@@ -132,14 +118,26 @@ public class Main {
                      }
  
                  }
->>>>>>> b975fb9295992e5cf883d2d8366d4d3604191c8a
             }
         }
 
 
         
         //when set to true,subtract from in popAnotB
-    } 
+    }   
+
+    public static void parseArgs(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("-n")) {
+                //generation size, default=10
+                genSize = Integer.parseInt(args[i+1]);
+            } 
+            else if (args[i].equals("-m")) {
+                //chromosome size, default=100
+                chromSize = Integer.parseInt(args[i+1]);
+            }
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         snp[] possibleSnps1 = initSnps(400);
@@ -160,6 +158,8 @@ public class Main {
         // //bottleneck effect on population A
         // populationA.bottleNeck(4);
         // populationA.reproduce(2, 10);
+        
+
 
         // writePopToFile(populationB, "popB.txt");
         // writePopToFile(populationA, "popA.txt");
@@ -179,5 +179,7 @@ public class Main {
 
         writePopToFile(populationC, "popC.txt");
         writePopToFile(populationD, "popD.txt");
+
     }
+
 }
