@@ -49,8 +49,8 @@ public class population{
         generations.add(0, randomFirstGeneration);
     } 
     
-    public population(organism[] foundingPop){
-        this.generations.add(0,foundingPop);
+    public population(organism[] foundingGeneration){
+        this.generations.add(0,foundingGeneration);
     }
 
 
@@ -58,7 +58,7 @@ public class population{
         organism[] nextGen = new organism[k];
         int A;
         int B;
-        for(i=0;i<k;i++){
+        for(int i = 0; i < k; i++){
             //choose two random parents
 
             A = rand.nextInt(generations.get(0).length);
@@ -120,4 +120,3 @@ public class population{
         return generations;
     }
 }
-    
