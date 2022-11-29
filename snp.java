@@ -34,6 +34,7 @@ public class snp{ //stores any nescessary info about each snp including possible
         int expressedIndex;
         String expressedVariant;
 
+
         public expressedSnp(int randomint) {
             if (randomint>prob) {
                 expressedIndex=1;
@@ -41,7 +42,8 @@ public class snp{ //stores any nescessary info about each snp including possible
                 expressedIndex=0;
             }
             this.expressedVariant = variants[expressedIndex];
-        }
+
+        }   
 
         public snp getSnp() {
             return snp.this;

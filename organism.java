@@ -1,26 +1,26 @@
 import java.util.Random;
 public class organism{
-    String [] chrA; 
-    String [] chrB;
+    snp.expressedSnp [] chrA; 
+    snp.expressedSnp [] chrB;
     Random rand = new Random();
     int j;
     int i;
     // create base pop orgainism
     public organism(int m, snp.expressedSnp[] snps){ //chrom size, possible snps
-        this.chrA = new String[m];
-        this.chrB = new String[m];
+        this.chrA = new snp.expressedSnp[m];
+        this.chrB = new snp.expressedSnp[m];
         for(i=0;i<m;i++){//add to chrA
-            this.chrA[i] = snps[i].expressedVariant;
+            this.chrA[i] = snps[i];
         }
         for(i=m;i<2*m;i++){//add to chrB 
-            this.chrB[i-m] = snps[i].expressedVariant;
+            this.chrB[i-m] = snps[i];
         }
     }
     //create organism from parents 
     public organism(organism daddy, organism mommy){ 
         int m = daddy.getChrA().length;
-        this.chrA = new String[m];
-        this.chrB = new String[m];
+        this.chrA = new snp.expressedSnp[m];
+        this.chrB = new snp.expressedSnp[m];
         for( i=0;i<m;i++){//add to chr A 
             j = rand.nextInt(2);
             if(j==0) {//choose from parent chr A 
@@ -39,10 +39,10 @@ public class organism{
         }
     }
 
-    public String[] getChrA(){
+    public snp.expressedSnp[] getChrA(){
         return this.chrA;
     }
-    public String[] getChrB(){
+    public snp.expressedSnp[] getChrB(){
         return this.chrB;
     }
 }
