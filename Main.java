@@ -2,12 +2,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.HashMap;
 
 public class Main {
 
     public static Random rand = new Random();
-    public static int genSize = 10;
-    public static int chromSize = 100;
 
     public static void writePopToFile(population pop, String filename) throws IOException {
         FileWriter fw = new FileWriter(filename);
@@ -47,6 +46,7 @@ public class Main {
         return isBottleneck;
     }
 
+
     // public static population bottleNeck(popA,popB,remainingOrganisms){
         
     // }
@@ -66,47 +66,71 @@ public class Main {
         return possibleSnps;
     }
 
-    public static void parseArgs(String[] args) {
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("-n")) {
-                //generation size, default=10
-                genSize = Integer.parseInt(args[i+1]);
-            } 
-            else if (args[i].equals("-m")) {
-                //chromosome size, default=100
-                chromSize = Integer.parseInt(args[i+1]);
+    public static void analyzeDiversity(population popA,population popB){ 
+        //compare snps from PopA and PopB
+        HashMap<Integer, Boolean> popSnps = new HashMap<Integer, Boolean>(); //False means in popA but not B, True means in both 
+        int inAnotB =0;
+        int inBnotA = 0; 
+        organism[] organismsA = popA.generations.get(0);
+        int chrmSize = organismsA[0].chrA.length;
+        for(int i=0;i<organismsA.length;i++){
+            organism currOrg =  organismsA[i] ;
+            for(int j=0; j<2*chrmSize;j++){// for each nt
+                if(j<chrmSize){ //access chrmA
+                   int snpId = currOrg.chrA[j].getSnp().position;
+                   popSnps.put(snpId,false); //record presence of snp    
+                }else{ 
+                    int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
+                   popSnps.put(snpId,false); 
+                }
             }
         }
+
+        
+        //when set to true,subtract from in popAnotB
     }
 
     public static void main(String[] args) throws IOException {
-
-
         snp[] possibleSnps1 = initSnps(400);
         System.out.println("possibleSnps1 initialized");
-        population populationA = new population(10, 100, possibleSnps1);
-        System.out.println("populationA initialized");
-        population populationB = new population(10, 100, possibleSnps1);
-        System.out.println("populationB initialized");
+        // population populationA = new population(10, 100, possibleSnps1);
+        // System.out.println("populationA initialized");
+        // population populationB = new population(10, 100, possibleSnps1);
+        // System.out.println("populationB initialized");
 
-        for (int i = 0; i < populationA.randomFirstGeneration.length; i++) {
-            System.out.println(populationA.randomFirstGeneration[i].chrA[0]);
-        }
+        // for (int i = 0; i < populationA.randomFirstGeneration.length; i++) {
+        //     System.out.println(populationA.randomFirstGeneration[i].chrA[0]);
+        // }
         
-        //initial evolution
-        populationB.reproduce(11, 10);
-        populationA.reproduce(8, 10);
-        //bottleneck effect on population A
-        populationA.bottleNeck(4);
-        populationA.reproduce(2, 10);
+        // //------ Bottleneck ------//
+        // //initial evolution
+        // populationB.reproduce(11, 10);
+        // populationA.reproduce(8, 10);
+        // //bottleneck effect on population A
+        // populationA.bottleNeck(4);
+        // populationA.reproduce(2, 10);
+        
 
-        writePopToFile(populationB, "popB.txt");
-        writePopToFile(populationA, "popA.txt");
 
-        System.out.println("generations");
-        for (int i = 0; i < populationA.generations.size(); i++) {
-            System.out.println(populationA.generations.get(i)[0].getChrA()[0]);
-        }
+        // writePopToFile(populationB, "popB.txt");
+        // writePopToFile(populationA, "popA.txt");
+
+        // System.out.println("generations");
+        // for (int i = 0; i < populationA.generations.size(); i++) {
+        //     System.out.println(populationA.generations.get(i)[0].getChrA()[0]);
+        // }
+        
+        //------ Founder effect ------// 
+        population populationC = new population(10, 100, possibleSnps1);
+        populationC.reproduce(5, 18);
+        organism[] foundingPop = populationC.founderEffect(4);
+        population populationD = new population(foundingPop);
+        populationC.reproduce(5, 18);
+        populationD.reproduce(5,18);
+
+        writePopToFile(populationC, "popC.txt");
+        writePopToFile(populationD, "popD.txt");
+
     }
-}
 
+}

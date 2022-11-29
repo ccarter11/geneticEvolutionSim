@@ -1,7 +1,7 @@
 import java.util.Random;
 public class organism{
-    snp.expressedSnp[] chrA; 
-    snp.expressedSnp[] chrB;
+    snp.expressedSnp [] chrA; 
+    snp.expressedSnp [] chrB;
     Random rand = new Random();
     int j;
     int i;
