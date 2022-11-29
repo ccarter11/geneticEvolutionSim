@@ -43,7 +43,7 @@ public class snp{ //stores any nescessary info about each snp including possible
                 expressedIndex=0;
             }
             this.expressedVariant = variants[expressedIndex];
-
+            this.position = getSnp().position;
         }   
 
         public snp getSnp() {

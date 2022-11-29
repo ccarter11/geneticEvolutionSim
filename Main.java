@@ -8,7 +8,6 @@ public class Main {
 
     public static Random rand = new Random();
     public static int genSize = 10;
-
     public static int chromSize = 100; 
 
 
@@ -70,61 +69,172 @@ public class Main {
         return possibleSnps;
     }
 
-    public static void analyzeDiversity(population popA,population popB){ 
+    public static void analyzeDiversity(population popA, population popB){ 
         //compare snps from PopA and PopB
-        HashMap<Integer, Boolean> popSnps = new HashMap<Integer, Boolean>(); //False means in popA but not B, True means in both 
+
+        HashMap<Integer, Boolean> snpsInA = new HashMap<Integer, Boolean>(); //False means in popA but not B, True means in both
+        HashMap<Integer, Boolean> snpsInB = new HashMap<Integer, Boolean>(); 
         
         int inBnotA = 0; 
         int inAnotB = 0 ;
-        organism[] organismsA = popA.generations.get(0);
-        int chrmSize = organismsA[0].chrA.length;
-        
-        for(int i=0;i<organismsA.length;i++){
-            organism currOrg =  organismsA[i] ;
-            for(int j=0; j<2*chrmSize;j++){// for each nt
-                if(j<chrmSize){ //access chrmA
-                    int snpId = currOrg.chrA[j].getSnp().position;
-                     if (popSnps.get(snpId) != null){
-                         popSnps.put(snpId,false); //record presence of snp    
-                         inAnotB++;}
-                 }else{ 
-                     int snpId = currOrg.chrA[j-chrmSize].getSnp().position;
-                     if (popSnps.get(snpId) != null){
-                          popSnps.put(snpId,false); 
-                         inAnotB++; 
-                     }
-                 }
-                
+
+        //populate hashtables for all snps in pop a and b
+
+        organism[] organismsInA = popA.generations.get(0);
+        organism[] organismsInB = popB.generations.get(0);
+        for (int i = 0; i < genSize; i++) {
+            for (int j = 0; j < chromSize; j++) {
+                snpsInA.put(organismsInA[i].getChrA()[j].position, false);
+                snpsInB.put(organismsInB[i].getChrA()[j].position, false);
             }
-        }
-        organism[] organismsB = popB.generations.get(0);
-        for(int i=0; i<organismsB.length;i++){
-            organism currOrg =  organismsB[i] ;
-            for(int j=0; j<2*chrmSize;j++){// for each nt
-                if(j<chrmSize){ //access chrmA
-                    int snpId = currOrg.chrB[j].getSnp().position;
-                     if (popSnps.get(snpId) != null){
-                         popSnps.put(snpId,true); //record presence of snp    
-                         inAnotB--;}
-                     else{
-                         inBnotA++; 
-                     }
-                 }else{ 
-                     int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
-                     if (popSnps.get(snpId) != null){
-                          popSnps.put(snpId,true); 
-                         inAnotB--; 
-                     }else{
-                         inBnotA++;
-                     }
- 
-                 }
+            for (int j = 0; j < chromSize; j++) {
+                snpsInA.put(organismsInA[i].getChrB()[j].position, false);
+                snpsInB.put(organismsInB[i].getChrB()[j].position, false);
             }
         }
 
+        HashMap<Integer, Boolean> checkedFromB = new HashMap<Integer, Boolean>();
+        HashMap<Integer, Boolean> checkedFromA = new HashMap<Integer, Boolean>();
 
+        for (int i = 0; i < genSize; i++) {
+            for (int j = 0; j < chromSize; j++) {
+
+                //in B not A section
+                if (checkedFromB.get(organismsInB[i].getChrA()[j].position) == null) {
+                    checkedFromB.put(organismsInB[i].getChrA()[j].position, true);
+
+                    System.out.println("snp: " 
+                    + Integer.toString(organismsInB[i].getChrA()[j].position)
+                    + " checked from popB");
+
+                    if (snpsInA.get(organismsInB[i].getChrA()[j].position) == null) {
+                        //if not in A
+                        inBnotA++;
+                    }
+                }
+                if (checkedFromB.get(organismsInB[i].getChrB()[j].position) == null) {
+                    checkedFromB.put(organismsInB[i].getChrB()[j].position, true);
+
+                    System.out.println("snp: " 
+                    + Integer.toString(organismsInB[i].getChrB()[j].position)
+                    + " checked from popB");
+
+                    if (snpsInA.get(organismsInB[i].getChrB()[j].position) == null) {
+                        //same for chromosome B
+                        inBnotA++;
+                    }
+                }
+
+                //in A not B section
+                if (checkedFromA.get(organismsInA[i].getChrA()[j].position) == null) {
+                    checkedFromA.put(organismsInA[i].getChrA()[j].position, true);
+
+                    System.out.println("snp: " 
+                    + Integer.toString(organismsInA[i].getChrA()[j].position)
+                    + " checked from popA");
+
+                    if (snpsInB.get(organismsInA[i].getChrA()[j].position) == null) {
+                        //if not in A
+                        inAnotB++;
+                    }
+                }
+                if (checkedFromA.get(organismsInA[i].getChrB()[j].position) == null) {
+                    checkedFromA.put(organismsInA[i].getChrB()[j].position, true);
+
+                    System.out.println("snp: " 
+                    + Integer.toString(organismsInA[i].getChrB()[j].position)
+                    + " checked from popA");
+
+                    if (snpsInB.get(organismsInA[i].getChrB()[j].position) == null) {
+                        //same for chromosome B
+                        inAnotB++;
+                    }
+                }
+            }
+        }
         
-        //when set to true,subtract from in popAnotB
+        
+        // for(int i=0;i<organismsInA.length;i++){
+        //     organism currOrg =  organismsInA[i] ;
+        //     for(int j=0; j<2*chromSize;j++){// for each nt
+        //         if(j<chromSize){ //access chrmA
+        //             int snpId = currOrg.chrA[j].getSnp().position;
+        //              if (snpsInA.get(snpId) == null){
+        //                  snpsInA.put(snpId,false); //record presence of snp    
+        //                  inAnotB++;
+        //                 }
+        //          }else{ 
+        //              int snpId = currOrg.chrB[j-chromSize].getSnp().position;
+        //              if (snpsInA.get(snpId) == null){
+        //                   snpsInA.put(snpId,false); 
+        //                  inAnotB++; 
+        //              }
+        //          }
+        //     }
+        // }
+        // organism[] organismsB = popB.generations.get(0);
+        // for(int i=0; i<organismsB.length;i++){
+        //     organism currOrg =  organismsB[i] ;
+        //     for(int j=0; j<2*chrmSize;j++){// for each nt
+        //         if(j<chrmSize){ //access chrmA
+        //             int snpId = currOrg.chrA[j].getSnp().position;
+        //              if (snpsInA.get(snpId) != null){
+        //                  snpsInA.put(snpId,true); //record presence of snp    
+        //                  inAnotB--;
+        //                 }
+        //              else{
+        //                  inBnotA++;
+        //              }
+        //          }else{ 
+        //              int snpId = currOrg.chrB[j-chrmSize].getSnp().position;
+        //              if (snpsInA.get(snpId) != null){
+        //                   snpsInA.put(snpId,true); 
+        //                  inAnotB--; 
+        //              }else{
+        //                  inBnotA++;
+        //              }
+        //          }
+        //     }
+        // }
+
+        population founderPop = null;
+        population bottleneckPop = null;
+        population otherPop = null;
+
+        if (inAnotB == 0 && inBnotA > 0) {
+            founderPop = popB;
+            otherPop = popA;
+        }
+        if (inBnotA == 0 && inAnotB > 0) {
+            founderPop = popA;
+            otherPop = popB;
+        }
+
+        if (inBnotA > 0 && inBnotA > 0) {
+            //bottleneck effect
+            if (inBnotA < inAnotB) {
+                bottleneckPop = popB;
+                otherPop = popA;
+            } else if (inBnotA > inAnotB) {
+                bottleneckPop = popA;
+                otherPop = popB;
+            }
+        }
+
+        if (bottleneckPop != null) {
+            System.out.println("\n\n\nthe bottleneck effect took place in the created populations...\n\n\n");
+            System.out.println("prediction: " + bottleneckPop.id + " was bottlenecked\n\n");
+            System.out.println("prediction: " + otherPop.id + " was safe\n\n");
+        } else if (founderPop != null) {
+            System.out.println("\n\n\nthe founder effect took place in the created populations...\n\n\n");
+            System.out.println("prediction: " + founderPop.id + " was a founder population\n\n");
+            System.out.println("prediction: " + otherPop.id + " was stable\n\n");
+        } else {
+            System.out.println("\n\n\nno effect was found to have happend in any population\n\n\n");
+        }
+        System.out.println(Integer.toString(inAnotB));
+        System.out.println(Integer.toString(inBnotA));
+    //when set to true,subtract from in popAnotB
     }   
 
     public static void parseArgs(String[] args) {
@@ -142,10 +252,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         snp[] possibleSnps1 = initSnps(400);
-        System.out.println("possibleSnps1 initialized");
-        // population populationA = new population(10, 100, possibleSnps1);
+        // System.out.println("possibleSnps1 initialized");
+        // population populationA = new population(10, 100, possibleSnps1, "popA");
         // System.out.println("populationA initialized");
-        // population populationB = new population(10, 100, possibleSnps1);
+        // population populationB = new population(10, 100, possibleSnps1, "popB");
         // System.out.println("populationB initialized");
 
         // for (int i = 0; i < populationA.randomFirstGeneration.length; i++) {
@@ -153,7 +263,7 @@ public class Main {
         // }
         
         // //------ Bottleneck ------//
-        // //initial evolution
+        //initial evolution
         // populationB.reproduce(11, 10);
         // populationA.reproduce(8, 10);
         // //bottleneck effect on population A
@@ -171,16 +281,16 @@ public class Main {
         // }
         
         //------ Founder effect ------// 
-        population populationC = new population(10, 100, possibleSnps1);
+        population populationC = new population(10, 100, possibleSnps1, "popC");
         populationC.reproduce(5, 18);
         organism[] foundingPop = populationC.founderEffect(4);
-        population populationD = new population(foundingPop);
-        populationC.reproduce(5, 18);
-        populationD.reproduce(5,18);
+        population populationD = new population(foundingPop, "popD");
+        populationC.reproduce(1, 18);
+        populationD.reproduce(1,18);
 
         writePopToFile(populationC, "popC.txt");
         writePopToFile(populationD, "popD.txt");
 
+        analyzeDiversity(populationC, populationD);
     }
-
 }
