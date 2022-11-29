@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class Main {
 
     public static Random rand = new Random();
-    public static int genSize = 10;
+    public static int generationSize = 10;
     public static int chromSize = 100; 
 
 
@@ -82,7 +82,7 @@ public class Main {
 
         organism[] organismsInA = popA.generations.get(0);
         organism[] organismsInB = popB.generations.get(0);
-        for (int i = 0; i < genSize; i++) {
+        for (int i = 0; i < generationSize; i++) {
             for (int j = 0; j < chromSize; j++) {
                 snpsInA.put(organismsInA[i].getChrA()[j].position, false);
                 snpsInB.put(organismsInB[i].getChrA()[j].position, false);
@@ -96,7 +96,7 @@ public class Main {
         HashMap<Integer, Boolean> checkedFromB = new HashMap<Integer, Boolean>();
         HashMap<Integer, Boolean> checkedFromA = new HashMap<Integer, Boolean>();
 
-        for (int i = 0; i < genSize; i++) {
+        for (int i = 0; i < generationSize; i++) {
             for (int j = 0; j < chromSize; j++) {
 
                 //in B not A section
@@ -241,7 +241,7 @@ public class Main {
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-n")) {
                 //generation size, default=10
-                genSize = Integer.parseInt(args[i+1]);
+                generationSize = Integer.parseInt(args[i+1]);
             } 
             else if (args[i].equals("-m")) {
                 //chromosome size, default=100
@@ -281,12 +281,12 @@ public class Main {
         // }
         
         //------ Founder effect ------// 
-        population populationC = new population(10, 100, possibleSnps1, "popC");
-        populationC.reproduce(5, 18);
-        organism[] foundingPop = populationC.founderEffect(4);
-        population populationD = new population(foundingPop, "popD");
-        populationC.reproduce(1, 18);
-        populationD.reproduce(1,18);
+        population populationC = new population(generationSize, chromSize, possibleSnps1, "popC");
+        populationC.reproduce(5, generationSize);
+        organism[] foundingGeneration = populationC.founderEffect(2);
+        population populationD = new population(foundingGeneration, "popD");
+        populationC.reproduce(1, generationSize);
+        populationD.reproduce(1, generationSize);
 
         writePopToFile(populationC, "popC.txt");
         writePopToFile(populationD, "popD.txt");
