@@ -104,9 +104,9 @@ public class Main {
                 if (checkedFromB.get(organismsInB[i].getChrA()[j].position) == null) {
                     checkedFromB.put(organismsInB[i].getChrA()[j].position, true);
 
-                    System.out.println("snp: " 
-                    + Integer.toString(organismsInB[i].getChrA()[j].position)
-                    + " checked from popB");
+                    // System.out.println("snp: " 
+                    // + Integer.toString(organismsInB[i].getChrA()[j].position)
+                    // + " checked from popB");
 
                     if (snpsInA.get(organismsInB[i].getChrA()[j].position) == null) {
                         //if not in A
@@ -116,9 +116,9 @@ public class Main {
                 if (checkedFromB.get(organismsInB[i].getChrB()[j].position) == null) {
                     checkedFromB.put(organismsInB[i].getChrB()[j].position, true);
 
-                    System.out.println("snp: " 
-                    + Integer.toString(organismsInB[i].getChrB()[j].position)
-                    + " checked from popB");
+                    // System.out.println("snp: " 
+                    // + Integer.toString(organismsInB[i].getChrB()[j].position)
+                    // + " checked from popB");
 
                     if (snpsInA.get(organismsInB[i].getChrB()[j].position) == null) {
                         //same for chromosome B
@@ -130,9 +130,9 @@ public class Main {
                 if (checkedFromA.get(organismsInA[i].getChrA()[j].position) == null) {
                     checkedFromA.put(organismsInA[i].getChrA()[j].position, true);
 
-                    System.out.println("snp: " 
-                    + Integer.toString(organismsInA[i].getChrA()[j].position)
-                    + " checked from popA");
+                    // System.out.println("snp: " 
+                    // + Integer.toString(organismsInA[i].getChrA()[j].position)
+                    // + " checked from popA");
 
                     if (snpsInB.get(organismsInA[i].getChrA()[j].position) == null) {
                         //if not in A
@@ -142,9 +142,9 @@ public class Main {
                 if (checkedFromA.get(organismsInA[i].getChrB()[j].position) == null) {
                     checkedFromA.put(organismsInA[i].getChrB()[j].position, true);
 
-                    System.out.println("snp: " 
-                    + Integer.toString(organismsInA[i].getChrB()[j].position)
-                    + " checked from popA");
+                    // System.out.println("snp: " 
+                    // + Integer.toString(organismsInA[i].getChrB()[j].position)
+                    // + " checked from popA");
 
                     if (snpsInB.get(organismsInA[i].getChrB()[j].position) == null) {
                         //same for chromosome B
@@ -203,12 +203,12 @@ public class Main {
         population otherPop = null;
 
         if (inAnotB == 0 && inBnotA > 0) {
-            founderPop = popB;
-            otherPop = popA;
-        }
-        if (inBnotA == 0 && inAnotB > 0) {
             founderPop = popA;
             otherPop = popB;
+        }
+        if (inBnotA == 0 && inAnotB > 0) {
+            founderPop = popB;
+            otherPop = popA;
         }
 
         if (inBnotA > 0 && inBnotA > 0) {
