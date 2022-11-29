@@ -102,19 +102,18 @@ public class population{
     public organism[] founderEffect(int r){
         int idx;
         int founders = 0;
-        organism[] foundingPop = new organism [r];
+        organism[] foudingGeneration = new organism[r];
         HashMap<Integer, Boolean> foundingOrganisms = new HashMap<Integer, Boolean>();
         while(founders<r){
             idx = rand.nextInt(this.generations.get(0).length); 
             if (foundingOrganisms.get(idx) == null){
-                foundingPop[founders] = this.generations.get(0)[idx];
+                foudingGeneration[founders] = this.generations.get(0)[idx];
                 System.out.println(this.generations.get(0)[idx]);
                 foundingOrganisms.put(idx, true);
                 founders++;
-                
             }
         }
-        return foundingPop; 
+        return foudingGeneration; 
     }
 
     public ArrayList<organism[]> getGenerations() {
