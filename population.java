@@ -3,13 +3,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class population{
+    public String id;
     snp[] possibleSnps;
     public organism[] randomFirstGeneration;
     Random rand = new Random();
     int i;
     ArrayList<organism[]> generations = new ArrayList<organism[]>();
     //creates a random population and simulates evoltion perhaps with some analysis methods 
-    public population(int n, int m, snp[] possibleSnps){//number of organisms n, chromosome size m
+    public population(int n, int m, snp[] possibleSnps, String id){//number of organisms n, chromosome size m
+        this.id=id;
         this.possibleSnps = possibleSnps;
         this.randomFirstGeneration = new organism[n]; //main population for instance
         System.out.println("possibleSnps and randomFirstGeneration initialized");
@@ -46,13 +48,13 @@ public class population{
             }
             this.randomFirstGeneration[i] = new organism(m, expressions);
         }
-        generations.add(0, randomFirstGeneration);
+        this.generations.add(0, randomFirstGeneration);
     } 
     
-    public population(organism[] foundingGeneration){
+    public population(organism[] foundingGeneration, String id){
+        this.id = id;
         this.generations.add(0,foundingGeneration);
     }
-
 
     public organism[] newGeneration(int k){ //create k new organisms to form previous generation
         organism[] nextGen = new organism[k];
@@ -61,12 +63,12 @@ public class population{
         for(int i = 0; i < k; i++){
             //choose two random parents
 
-            A = rand.nextInt(generations.get(0).length);
-            B = rand.nextInt(generations.get(0).length);
+            A = rand.nextInt(this.generations.get(0).length);
+            B = rand.nextInt(this.generations.get(0).length);
   
             while(B==A)//make sure parents aren't the same organism
-                B = rand.nextInt(generations.get(0).length);
-            nextGen[i] = new organism(generations.get(0)[A], generations.get(0)[B]);
+                B = rand.nextInt(this.generations.get(0).length);
+            nextGen[i] = new organism(this.generations.get(0)[A], this.generations.get(0)[B]);
         }
         System.out.println("new generation created");
         return nextGen;
@@ -75,7 +77,7 @@ public class population{
     public void reproduce(int gens, int genSize){ //simulate multiple generations of reproduction 
         for(int i = 0; i < gens; i++) {
             organism[] nextGen = newGeneration(genSize);
-            generations.add(0, nextGen);
+            this.generations.add(0, nextGen);
         }
     }
 
@@ -94,7 +96,6 @@ public class population{
                 surviving++;
             }
         }
-
         generations.add(0,survivingPop);
     }
     //return a subset of current generation that will start a new population
@@ -104,19 +105,19 @@ public class population{
         organism[] foundingPop = new organism [r];
         HashMap<Integer, Boolean> foundingOrganisms = new HashMap<Integer, Boolean>();
         while(founders<r){
-            idx = rand.nextInt(generations.get(0).length); 
+            idx = rand.nextInt(this.generations.get(0).length); 
             if (foundingOrganisms.get(idx) == null){
-                foundingPop[founders] = generations.get(0)[idx];
+                foundingPop[founders] = this.generations.get(0)[idx];
+                System.out.println(this.generations.get(0)[idx]);
                 foundingOrganisms.put(idx, true);
                 founders++;
+                
             }
         }
-
         return foundingPop; 
-
     }
 
     public ArrayList<organism[]> getGenerations() {
-        return generations;
+        return this.generations;
     }
 }
